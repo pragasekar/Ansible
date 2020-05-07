@@ -1,0 +1,36 @@
+---
+- name: My Variable Lab
+  hosts: client
+  vars:
+    pkgName: httpd
+    htmlPath: /usr/share/httpd/noindex/index.html
+    confPath: /etc/httpd/conf/httpd.conf
+    serviceName: httpd
+    newPort: 81
+    currentPort: 80
+    targetPkgState: present
+    targetServiceState: started
+
+  tasks:
+    - name: install {{pkgName}}
+      yum: name={{pkgName}} state={{targetPkgState}}
+      register: installResult
+
+    - name: print {{pkgName}} installtion status
+      debug: var=installResult
+
+    - name: Change port number to {{targetPort}}
+      lineinfile: path={{confPath}} regexp="Listen {{currentPort}}" line="Listen {{newPort}}"
+      register: changePortResult
+      ignore_errors: true
+
+    - name: print {{pkgName}} change port to {{newPort}} status
+      debug: var=changePortResult
+
+    - name: start {{serviceName}}
+      service: name={{serviceName}} state={{targetServiceState}} enabled=yes
+      register: serviceOperationResult
+      ignore_errors: true
+
+    - name: print {{pkgName}} process service {{serviceName}}
+      debug: var=changePortResult

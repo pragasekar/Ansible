@@ -1,0 +1,12 @@
+---
+-
+  name: Create user from playbook
+  hosts: client
+
+  tasks:
+    - name: craete user task
+      user:
+        name: test
+        uid: 8888
+        home: /home/test
+        state: present

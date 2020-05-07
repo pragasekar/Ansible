@@ -1,0 +1,9 @@
+---
+- name: Install telnet and talk packages
+  hosts: client
+
+  tasks:
+    - name: Install telnet and talk packages
+      yum:
+        name: talk, telnet
+        state: present

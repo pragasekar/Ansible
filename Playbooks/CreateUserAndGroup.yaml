@@ -1,0 +1,17 @@
+---
+- name: Create user and Group
+  hosts: client
+  tasks:
+    - name: Creat a group
+      group:
+        name: grouptest
+        gid: 7777
+        state: present
+    - name: my first user
+      user:
+        name: usertest
+        uid: 6666
+        state: present
+        password: "$6$mysecretsalt$MQAIsT.pUo2OQ6qkIbtUCBd5q9KEQ29RWRr/QtHt66bCJpGHffRad8LJ412L5Emi14NJ612DULUX/Y7b98.RA1"
+    ## password generated used by below cmd
+    ## ansible all -i localhost, -m debug -a "msg={{ 'Thinknyx' | password_hash('sha512', 'mysecretsalt') }}"

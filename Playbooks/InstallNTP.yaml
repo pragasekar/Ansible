@@ -1,0 +1,9 @@
+---
+- name: Install NTP package
+  hosts: client
+  tasks:
+    - name: install NTP package
+      yum: name=ntp state=present # this type of structure works only for Ansible. not in all the yaml
+
+    - name: start services
+      service: name=ntpd state=started enabled=yes

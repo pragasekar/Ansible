@@ -1,0 +1,10 @@
+---
+# vars file for httpdrole
+pkgName: httpd
+htmlPath: /usr/share/httpd/noindex/index.html
+confPath: /etc/httpd/conf/httpd.conf
+serviceName: httpd
+newPort: 81
+currentPort: 80
+targetPkgState: present
+targetServiceState: started

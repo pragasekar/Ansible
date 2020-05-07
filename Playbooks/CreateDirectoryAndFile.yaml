@@ -1,0 +1,20 @@
+---
+- name: Create file and Directories
+  hosts: client
+  tasks:
+    - name: Create a directory
+      file:
+        state: directory
+        path: /var/tmp/mydir
+        mode: 0777
+        owner: root
+    - name: create a file
+      file:
+        state: touch
+        path: /var/tmp/mydir/testfile
+        owner: test
+        group: grouptest
+    - name: copy content to file
+      copy:
+        src: /var/log/messages
+        dest: /var/tmp/mydir/testfile

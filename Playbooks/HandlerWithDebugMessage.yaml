@@ -1,0 +1,30 @@
+---
+- name: My Handler lab
+  hosts: client
+
+  tasks:
+    - name: install httpd
+      yum: name=httpd state=present
+      register: installmsg
+      ignore_errors: true
+
+    - name: Print install status
+      debug: var=installmsg
+
+    - name: change port
+      lineinfile: path=/etc/httpd/conf/httpd.conf regexp="Listen 82" line="Listen 81"
+      notify:
+        - restart httpd
+      ignore_errors: true
+
+    - name: start the service
+      service: name=httpd state=started enabled=yes
+      ignore_errors: true
+
+    - name: print status message
+      debug: msg="installed successfuly"
+
+  handlers:
+    - name: restart httpd
+      service: name=httpd state=restarted enabled=yes
+      ignore_errors: true

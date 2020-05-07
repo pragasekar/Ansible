@@ -1,0 +1,7 @@
+---
+- name: My facts lab
+  hosts: client
+
+  tasks:
+   - name: craete banner file
+     copy: dest=/etc/motd content="Hi.. you are using  server {{ansible_hostname}} having distubtion of {{ansible_distribution}}" mode=0777

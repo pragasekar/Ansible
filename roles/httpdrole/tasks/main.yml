@@ -1,0 +1,17 @@
+---
+# tasks file for httpdrole
+- name: "install {{pkgName}}"
+  yum: name={{pkgName}} state={{targetPkgState}}
+  register: installResult
+
+- name: print {{pkgName}} installtion status
+  debug: var=installResult
+
+- name: Change port number to {{targetPort}}
+  lineinfile: path={{confPath}} regexp="Listen {{currentPort}}" line="Listen {{newPort}}"
+  register: changePortResult
+  ignore_errors: true
+  notify: start {{serviceName}}
+
+- name: print {{pkgName}} change port to {{newPort}} status
+  debug: var=changePortResult

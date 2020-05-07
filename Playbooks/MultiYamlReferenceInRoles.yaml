@@ -1,0 +1,9 @@
+## roles/roleName/tasks/main.yaml
+- include: installPkg.yaml
+- include: debugMsg.yaml
+- include: changePort.yaml
+- include: debugMsg.yaml
+- name: echo from task main yaml
+  debug: msg="Message from task.main.yaml"
+
+

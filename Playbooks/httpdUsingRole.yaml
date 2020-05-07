@@ -1,0 +1,6 @@
+---
+- name: Create httpd using roles
+  hosts: client
+
+  roles:
+    - httpdrole # Refer the C:\Pragathees\Tech\Ansible\roles\httpdrole or httpdRoleDetails.yaml file for more deatill about this

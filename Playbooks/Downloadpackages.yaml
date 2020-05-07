@@ -1,0 +1,8 @@
+---
+- name: download packages
+  hosts: client
+  tasks:
+    - name: download packages from https
+      get_url:
+        dest: /tmp
+        url: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm

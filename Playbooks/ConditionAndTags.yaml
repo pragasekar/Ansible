@@ -1,0 +1,12 @@
+---
+- name: start httpd using multiple roldes
+  hosts: client
+
+  roles:
+    - httpdrole
+
+  tasks:
+    - name: Echo message from playbook yaml
+      debug: msg="Echo message after rols execution"
+      tags: lastMsg
+      when: 'newPort=="81"'

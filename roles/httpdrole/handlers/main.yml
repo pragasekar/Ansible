@@ -1,0 +1,9 @@
+---
+# handlers file for httpdrole
+- name: start {{serviceName}}
+  service: name={{serviceName}} state={{targetServiceState}} enabled=yes
+  register: serviceOperationResult
+  ignore_errors: true
+
+- name: print {{pkgName}} process service {{serviceName}}
+  debug: var=changePortResult

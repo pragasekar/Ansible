@@ -1,0 +1,14 @@
+---
+- name: Install NTP package
+  hosts: client
+  tasks:
+    - name: install NTP package
+      yum: name=ntp state=absent
+
+    - name: copy server details
+      copy: dest=/etc/ntp.conf content="serverericsson0.centos.pool.ntp.org\nserverericsson1.centos.pool.ntp.org\nserverericsson2.centos.pool.ntp.org"
+      ignore_errors: yes
+
+    - name: start services
+      service: name=ntpd state=started enabled=yes
+      ignore_errors: yes

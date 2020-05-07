@@ -1,0 +1,9 @@
+---
+- name: start the nfs service
+  hosts: client
+  tasks:
+    - name: start the nfs service
+      service:
+        name: nfs
+        state: started
+        enabled: yes

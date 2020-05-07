@@ -1,0 +1,27 @@
+---
+- name: Testing loops lab
+  hosts: client
+  vars:
+    pkg1: php
+    pkg2: vim
+    pkg3: httpd
+    info: ["msg1","msg2", "msg3"]
+  tasks:
+    - name: install multiple package using loops
+      yum: name={{item}} state=installed
+      with_items:
+        - "{{pkg1}}"
+        - "{{pkg2}}"
+        - "{{pkg3}}"
+
+    - name: start the service
+      service: name=httpd state=started
+      register: serviceout
+
+    - name: print message
+      debug: var=serviceout
+
+    - name: print loop message
+      debug: msg={{item}}
+      with_items:
+        - "{{info}}"

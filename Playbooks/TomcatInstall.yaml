@@ -1,0 +1,43 @@
+---
+- name: Install Tomact
+  hosts: client
+  vars:
+    preReqPkg: ["java-1.8.0-openjdk","wget"]
+    tomcatPath: /opt/tomcat
+    tomcatSourceUrl: "http://mirror.23media.de/apache/tomcat/tomcat-8/v8.5.29/bin/apache-tomcat-8.5.29.tar.gz"
+    sampleWarUrl: "https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war"
+    warFilePath: "/opt/tomcat/apache-tomcat-8.5.29/bin/webapps/"
+    tomcatFiles: ["/opt/tomcat/apache-tomcat-8.5.29/bin/startup.sh","/opt/tomcat/apache-tomcat-8.5.29/bin/shutdown.sh","/opt/tomcat/apache-tomcat-8.5.29/bin/catalina.sh"]
+    waitForSec: 60
+
+  tasks:
+    - name: install required packages
+      yum: name={{item}} state=installed
+      with_items:
+        - "{{preReqPkg}}"
+
+    - name: create tomact directory
+      file: path={{tomcatPath}} state=directory
+
+    - name: download tomcat packages
+      get_url: dest={{tomcatPath}} url={{tomcatSourceUrl}}
+
+    - name: Extarct the tomcat tar
+      unarchive: dest={{tomcatPath}} src={{tomcatPath}}/apache-tomcat-8.5.29.tar.gz
+      ignore_errors: true
+
+    - name: Change the file permission
+      file: name={{item}} mode=0777
+      with_items:
+        - "{{tomcatFiles}}"
+      ignore_errors: true
+
+    - name: download sample war
+      get_url: dest={{warFilePath}} url={{sampleWarUrl}}
+
+    - name: wait for {{waitForSec}}secs
+      wait_for: timeout=60
+
+    - name: start tomcat
+      command: "nohup /opt/tomcat/apache-tomcat-8.5.29/bin/catalina.sh start"
+      ignore_errors: true
